@@ -8,7 +8,7 @@ use wasm_bindgen_test::*;
 wasm_bindgen_test_configure!(run_in_browser);
 
 use base64::decode;
-use image_worker::process_image;
+use rust_image_worker::process_image;
 use wasm_bindgen::JsValue;
 
 #[macro_use]

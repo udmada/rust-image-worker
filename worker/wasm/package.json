@@ -1,0 +1,16 @@
+{
+  "name": "rust-image-worker",
+  "collaborators": [
+    "Pieter Raubenheimer <pieter@wavana.com>",
+    "Adam Du <github@adamdu.nz>"
+  ],
+  "version": "0.1.1",
+  "files": [
+    "index_bg.wasm",
+    "index.js",
+    "index.d.ts"
+  ],
+  "module": "index.js",
+  "types": "index.d.ts",
+  "sideEffects": false
+}

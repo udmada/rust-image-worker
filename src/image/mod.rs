@@ -3,7 +3,7 @@ mod transform;
 pub use image::ImageOutputFormat;
 
 use image::{
-    guess_format, load_from_memory, DynamicImage, FilterType, GenericImage, GenericImageView,
+    guess_format, load_from_memory, DynamicImage, imageops::FilterType, GenericImage, GenericImageView,
     ImageFormat,
 };
 
@@ -14,10 +14,10 @@ pub fn input_to_output_format(
     quality: u8,
 ) -> Result<ImageOutputFormat, failure::Error> {
     match input_format {
-        ImageFormat::JPEG => Ok(ImageOutputFormat::JPEG(quality)),
-        ImageFormat::PNG => Ok(ImageOutputFormat::PNG),
-        ImageFormat::GIF => Ok(ImageOutputFormat::PNG),
-        ImageFormat::WEBP => Ok(ImageOutputFormat::PNG),
+        ImageFormat::Jpeg => Ok(ImageOutputFormat::Jpeg(quality)),
+        ImageFormat::Png => Ok(ImageOutputFormat::Png),
+        ImageFormat::Gif => Ok(ImageOutputFormat::Png),
+        ImageFormat::WebP => Ok(ImageOutputFormat::Png),
         _ => Err(failure::format_err!("unsupported input format")),
     }
 }
@@ -53,7 +53,7 @@ pub fn process(
     }
 
     let mut resized_image =
-        image.resize_exact(output_size.width, output_size.height, FilterType::Triangle);
+        image.resize_exact(output_size.width, output_size.height, image::imageops::FilterType::Triangle);
 
     let mut output_canvas = DynamicImage::new_rgba8(canvas_size.width, canvas_size.height);
 
@@ -89,12 +89,6 @@ pub fn process(
         copied_y,
     );
 
-    if !has_copied {
-        return Err(failure::format_err!(
-            "could not place image due to sizing errors",
-        ));
-    }
-
     if color.is_some() {
         fill(&mut output_canvas, color.unwrap());
     }
@@ -110,16 +104,16 @@ fn fill(image: &mut DynamicImage, color_data: [u8; 3]) {
     match image {
         DynamicImage::ImageRgba8(image_buffer) => {
             for mut pixel_mut in image_buffer.pixels_mut() {
-                let a = pixel_mut.data[3] as f32 / 255.0;
+                let a = pixel_mut[3] as f32 / 255.0;
 
-                let r = (a * pixel_mut.data[0] as f32) + ((1.0 - a) * color_data[0] as f32);
-                let g = (a * pixel_mut.data[1] as f32) + ((1.0 - a) * color_data[1] as f32);
-                let b = (a * pixel_mut.data[2] as f32) + ((1.0 - a) * color_data[2] as f32);
+                let r = (a * pixel_mut[0] as f32) + ((1.0 - a) * color_data[0] as f32);
+                let g = (a * pixel_mut[1] as f32) + ((1.0 - a) * color_data[1] as f32);
+                let b = (a * pixel_mut[2] as f32) + ((1.0 - a) * color_data[2] as f32);
 
-                pixel_mut.data[0] = r as u8;
-                pixel_mut.data[1] = g as u8;
-                pixel_mut.data[2] = b as u8;
-                pixel_mut.data[3] = 255;
+                pixel_mut[0] = r as u8;
+                pixel_mut[1] = g as u8;
+                pixel_mut[2] = b as u8;
+                pixel_mut[3] = 255;
             }
         }
         _ => {}
@@ -152,7 +146,7 @@ mod test {
         let output = process(
             &mut image,
             &transform,
-            ImageOutputFormat::PNG,
+            ImageOutputFormat::Png,
             Some([100, 200, 100]),
         );
 
@@ -181,7 +175,7 @@ mod test {
         let output = process(
             &mut image,
             &transform,
-            ImageOutputFormat::JPEG(90),
+            ImageOutputFormat::Jpeg(90),
             Some([100, 200, 100]),
         );
 
@@ -206,7 +200,7 @@ mod test {
             },
         );
 
-        let output = process(&mut image, &transform, ImageOutputFormat::JPEG(90), None);
+        let output = process(&mut image, &transform, ImageOutputFormat::Jpeg(90), None);
 
         let mut file =
             std::fs::File::create("tests/output/Apollo_17_Image_Of_Earth_From_Space.jpg").unwrap();

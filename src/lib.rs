@@ -1,9 +1,10 @@
+extern crate base64;
 extern crate cfg_if;
 extern crate wasm_bindgen;
-
 mod image;
 mod utils;
 
+use base64::encode;
 use cfg_if::cfg_if;
 use serde_wasm_bindgen::from_value;
 use wasm_bindgen::prelude::*;
@@ -46,6 +47,11 @@ fn error_to_js_value(e: failure::Error) -> JsValue {
     JsValue::from_str(&e.to_string())
 }
 
+#[wasm_bindgen]
+pub fn convert_to_base64(msg: &str) -> Result<String, JsValue> {
+    let hash = encode(msg);
+    Ok(hash)
+}
 
 #[wasm_bindgen]
 pub fn process_image(buffer: &[u8], params_value: JsValue) -> Result<Vec<u8>, JsValue> {
@@ -126,16 +132,16 @@ fn string_to_transform_mode(
 
 fn string_to_output_format(format_string: &str, quality: u8) -> Option<image::ImageOutputFormat> {
     match format_string {
-        "png" => Some(image::ImageOutputFormat::PNG),
-        "jpg" => Some(image::ImageOutputFormat::JPEG(quality)),
+        "png" => Some(image::ImageOutputFormat::Png),
+        "jpg" => Some(image::ImageOutputFormat::Jpeg(quality)),
         _ => None,
     }
 }
 
 fn output_format_to_key(output_format: image::ImageOutputFormat) -> u8 {
     match output_format {
-        image::ImageOutputFormat::PNG => 0,
-        image::ImageOutputFormat::JPEG(_) => 1,
+        image::ImageOutputFormat::Png => 0,
+        image::ImageOutputFormat::Jpeg(_) => 1,
         _ => unimplemented!(),
     }
 }

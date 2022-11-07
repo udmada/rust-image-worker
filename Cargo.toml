@@ -1,8 +1,8 @@
 [package]
-name = "image-worker"
-version = "0.1.0"
-authors = ["Pieter Raubenheimer <pieter@wavana.com>"]
-edition = "2018"
+name = "rust-image-worker"
+version = "0.1.1"
+authors = ["Pieter Raubenheimer <pieter@wavana.com>", "Adam Du <github@adamdu.nz>"]
+edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
@@ -11,14 +11,13 @@ crate-type = ["cdylib", "rlib"]
 default = ["console_error_panic_hook"]
 
 [dependencies]
-cfg-if = "0.1.2"
-wasm-bindgen = "0.2"
-serde = "^1.0.59"
-serde_derive = "^1.0.59"
-serde-wasm-bindgen = "0.1.3"
-failure = "0.1.5"
-base64 = "0.10.1"
-# resvg = "0.7.0"
+cfg-if = "1.0.0"
+wasm-bindgen = "0.2.78"
+serde = "1.0.133"
+serde_derive = "1.0.133"
+serde-wasm-bindgen = "0.4.1"
+failure = "0.1.8"
+base64 = "0.13.0"
 
 # The `console_error_panic_hook` crate provides better debugging of panics by
 # logging them with `console.error`. This is great for development, but requires
@@ -31,10 +30,10 @@ console_error_panic_hook = { version = "0.1.1", optional = true }
 # allocator, however.
 #
 # Unfortunately, `wee_alloc` requires nightly Rust when targeting wasm for now.
-wee_alloc = { version = "0.4.2", optional = true }
+wee_alloc = "0.4.5"
 
 [dev-dependencies]
-wasm-bindgen-test = "0.2"
+wasm-bindgen-test = "0.3.28"
 
 [dev-dependencies.wasm-bindgen]
 version = "^0.2"
@@ -45,6 +44,6 @@ features = ["serde-serialize"]
 opt-level = "s"
 
 [dependencies.image]
-version = "0.21.2"
+version = "0.23.14"
 default-features = false
-features = ["jpeg", "png_codec", "gif_codec", "webp"]
+features = ["jpeg", "png", "gif", "webp"]
