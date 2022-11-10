@@ -3,8 +3,7 @@ mod transform;
 pub use image::ImageOutputFormat;
 
 use image::{
-    guess_format, load_from_memory, DynamicImage, imageops::FilterType, GenericImage, GenericImageView,
-    ImageFormat,
+    guess_format, load_from_memory, DynamicImage, GenericImage, GenericImageView, ImageFormat,
 };
 
 pub use transform::{PixelCoords, PixelSize, Transform, TransformMode};
@@ -42,6 +41,7 @@ pub fn process(
     transform: &Transform,
     output_format: ImageOutputFormat,
     color: Option<[u8; 3]>,
+    grayscale_op: bool,
 ) -> Result<Vec<u8>, failure::Error> {
     let output_dimensions = transform.get_output_pixel_dimensions();
     let canvas_size = output_dimensions.canvas;
@@ -52,8 +52,11 @@ pub fn process(
         fill(image, color.unwrap());
     }
 
-    let mut resized_image =
-        image.resize_exact(output_size.width, output_size.height, image::imageops::FilterType::Triangle);
+    let mut resized_image = image.resize_exact(
+        output_size.width,
+        output_size.height,
+        image::imageops::FilterType::Triangle,
+    );
 
     let mut output_canvas = DynamicImage::new_rgba8(canvas_size.width, canvas_size.height);
 
@@ -91,6 +94,10 @@ pub fn process(
 
     if color.is_some() {
         fill(&mut output_canvas, color.unwrap());
+    }
+
+    if grayscale_op {
+        output_canvas = output_canvas.grayscale();
     }
 
     let mut output: Vec<u8> = Vec::new();
@@ -148,6 +155,7 @@ mod test {
             &transform,
             ImageOutputFormat::Png,
             Some([100, 200, 100]),
+            false,
         );
 
         let mut file =
@@ -177,6 +185,7 @@ mod test {
             &transform,
             ImageOutputFormat::Jpeg(90),
             Some([100, 200, 100]),
+            false,
         );
 
         let mut file = std::fs::File::create("tests/output/test_pattern_fit.jpg").unwrap();
@@ -200,7 +209,13 @@ mod test {
             },
         );
 
-        let output = process(&mut image, &transform, ImageOutputFormat::Jpeg(90), None);
+        let output = process(
+            &mut image,
+            &transform,
+            ImageOutputFormat::Jpeg(90),
+            None,
+            false,
+        );
 
         let mut file =
             std::fs::File::create("tests/output/Apollo_17_Image_Of_Earth_From_Space.jpg").unwrap();

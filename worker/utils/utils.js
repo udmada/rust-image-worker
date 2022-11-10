@@ -8,7 +8,7 @@ function throwR2Error(method, status, message) {
   throw new Error(`R2 ${method} failed: (${status}) ${message}`);
 }
 export function parseHttpMetadata(httpMetadata) {
-  if (httpMetadata === void(0)) {
+  if (httpMetadata === void 0) {
     return {};
   }
   httpMetadata = { ...httpMetadata };
@@ -34,8 +34,8 @@ export function matchStrings(a, b) {
 export function testR2Conditional(conditional, metadata) {
   const { etagMatches, etagDoesNotMatch, uploadedBefore, uploadedAfter } =
     conditional;
-  if (metadata === void(0)) {
-    return etagMatches === void(0) && uploadedAfter === void(0);
+  if (metadata === void 0) {
+    return etagMatches === void 0 && uploadedAfter === void 0;
   }
   const { etag, uploaded } = metadata;
   const ifMatch = etagMatches ? matchStrings(etagMatches, etag) : null;
@@ -46,14 +46,14 @@ export function testR2Conditional(conditional, metadata) {
   if (ifNoneMatch === false) return false;
   if (
     ifMatch !== true &&
-    uploadedBefore !== void(0) &&
+    uploadedBefore !== void 0 &&
     uploaded > uploadedBefore
   ) {
     return false;
   }
   if (
     ifNoneMatch !== true &&
-    uploadedAfter !== void(0) &&
+    uploadedAfter !== void 0 &&
     uploaded < uploadedAfter
   ) {
     return false;
@@ -71,7 +71,7 @@ export function stripQuotes(input) {
   return input;
 }
 export function parseOnlyIf(onlyIf) {
-  if (onlyIf === undefined || onlyIf === void(0)) {
+  if (onlyIf === undefined || onlyIf === void 0) {
     return {};
   }
   if (typeof onlyIf.etagMatches === "string") {
@@ -266,6 +266,7 @@ export function getParams(req) {
     quality: 90,
     scale: 1,
     width: 0,
+    filter: "",
   };
 
   const reqUrl = new URL(req.url);
@@ -352,6 +353,12 @@ export function getParams(req) {
     } else {
       errors.push("bg must be a valid hex color between 000 and ffffff");
     }
+  }
+
+  if (searchParams.has("filter")) {
+    try {
+      params.filter = searchParams.get("filter").toLowerCase();
+    } catch (_) {}
   }
 
   return params;

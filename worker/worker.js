@@ -62,12 +62,11 @@ async function handleRequest(event) {
 
     res = new Response(output.slice(0, -1), { status: 200 });
     res.headers.set("Content-type", getMimeType(VALID_FORMATS[output_format]));
-    res.headers.append("Cache-Control","public, max-age=0, s-maxage=86400")
+    res.headers.append("Cache-Control", "public, max-age=0, s-maxage=86400");
     cache.put(req, res.clone());
     if (originResToCache) {
       cache.put(originReq, originResToCache);
     }
-
   } catch (e) {
     const errorObject = {
       error: e.message,

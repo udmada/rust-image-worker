@@ -1,12 +1,14 @@
 extern crate base64;
 extern crate cfg_if;
 extern crate wasm_bindgen;
+
 mod image;
 mod utils;
 
 use cfg_if::cfg_if;
 use serde_wasm_bindgen::from_value;
 use wasm_bindgen::prelude::*;
+
 
 #[macro_use]
 extern crate serde_derive;
@@ -40,6 +42,7 @@ struct ProcessImageParams {
     quality: u8,
     scale: f32,
     width: u32,
+    filter: String,
 }
 
 fn error_to_js_value(e: failure::Error) -> JsValue {
@@ -49,7 +52,6 @@ fn error_to_js_value(e: failure::Error) -> JsValue {
 #[wasm_bindgen]
 pub fn process_image(buffer: &[u8], params_value: JsValue) -> Result<Vec<u8>, JsValue> {
     console_error_panic_hook::set_once();
-
     let params: ProcessImageParams = from_value(params_value)?;
 
     let transform_mode = string_to_transform_mode(
@@ -82,8 +84,18 @@ pub fn process_image(buffer: &[u8], params_value: JsValue) -> Result<Vec<u8>, Js
         Some([params.bg[0], params.bg[1], params.bg[2]])
     };
 
-    let mut output = image::process(&mut image, &transform, output_format.clone(), color_option)
-        .map_err(error_to_js_value)?;
+
+    let grayscale_option = params.filter.contains("grayscale");
+
+
+    let mut output = image::process(
+        &mut image,
+        &transform,
+        output_format.clone(),
+        color_option,
+        grayscale_option,
+    )
+    .map_err(error_to_js_value)?;
 
     output.push(output_format_to_key(output_format));
 
