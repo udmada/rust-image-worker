@@ -1,11 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
-* @param {string} msg
-* @returns {string}
-*/
-export function convert_to_base64(msg: string): string;
-/**
 * @param {Uint8Array} buffer
 * @param {any} params_value
 * @returns {Uint8Array}
@@ -16,7 +11,6 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
-  readonly convert_to_base64: (a: number, b: number, c: number) => void;
   readonly process_image: (a: number, b: number, c: number, d: number) => void;
   readonly __wbindgen_malloc: (a: number) => number;
   readonly __wbindgen_realloc: (a: number, b: number, c: number) => number;

@@ -28,8 +28,8 @@ This software is currently used only for demonstration purposes and you should b
 
 ### Deploying the worker
 
-1. Follow instructions to install 🤠[wrangler](https://github.com/cloudflare/wrangler).
-2. Add your [account id and zone id](https://workers.cloudflare.com/docs/quickstart/api-keys/) to the [`wrangler.toml`](wrangler.toml)
+1. Follow instructions to install 🤠[wrangler](https://github.com/cloudflare/wrangler2).
+2. Add your [account id](https://workers.cloudflare.com/docs/quickstart/api-keys/) to the [`wrangler.toml`](wrangler.toml)
 3. Run `$ wrangler publish`
 
 You should see something like:
@@ -42,7 +42,7 @@ You should see something like:
 
 ### Calling the worker
 
-You will be able to call the worker at the domain provided,e.g. [http://image-worker...workers.dev](http://factorymethod.uk/image).
+You will be able to call the worker at the domain provided,e.g. [https://rust-image-worker...workers.dev](http://cgi.adamdu.nz).
 
 The URL path should be formatted as an image filename with a file extension signifying the target image format. Supported output formats are PNG (`.png`) and JPEG (`.jpg` or `.jpeg`).
 
@@ -67,8 +67,8 @@ Examples:
 
 | URL                                                                                                                                                                                                                               | Image                                                                                                                              |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| [https://.../image.png?<br/>mode=fill&<br/>width=180&<br/>height=200&<br/>origin=https://.../test_pattern.png](https://factorymethod.uk/image.png?mode=fill&width=180&height=200&origin=http://factorymethod.uk/test_pattern.png) | ![fill example](https://factorymethod.uk/image.png?mode=fill&width=180&height=200&origin=http://factorymethod.uk/test_pattern.png) |
-| [https://.../image.jpg?<br/>mode=fill&<br/>width=180&<br/>height=200&<br/>origin=https://.../Apollo_17.jpeg](https://factorymethod.uk/image.png?mode=fill&width=180&height=200&origin=http://factorymethod.uk/Apollo_17.jpeg)     | ![fill example](https://factorymethod.uk/image.jpeg?mode=fill&width=180&height=200&origin=http://factorymethod.uk/Apollo_17.jpeg)  |
+| [https://.../?<br/>mode=fill&<br/>width=180&<br/>height=200&<br/>origin=https://.../test_pattern.png](https://cgi.adamdu.nz/?mode=fill&width=180&height=200&origin=https://public.adamdu.nz/test_pattern.png) | ![fill example](https://cgi.adamdu.nz/?mode=fill&width=180&height=200&origin=https://public.adamdu.nz/test_pattern.png) |
+| [https://.../?<br/>mode=fill&<br/>width=180&<br/>height=200&<br/>origin=https://.../Apollo_17.jpeg](https://cgi.adamdu.nz/?mode=fill&width=180&height=200&origin=https://public.adamdu.nz/Apollo_17.jpeg)     | ![fill example](https://cgi.adamdu.nz/?mode=fill&width=180&height=200&origin=https://public.adamdu.nz/Apollo_17.jpeg)  |
 
 ### Fit mode
 
@@ -80,9 +80,9 @@ Examples:
 
 | URL                                                                                                                                                                                                                                                                                                                      | Image                                                                                                                                                |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [https://.../image.png?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>bg=abc&<br/>origin=https://.../test_pattern.png](https://factorymethod.uk/image.png?mode=fit&width=180&height=200&bg=abc&origin=http://factorymethod.uk/test_pattern.png)                                                                       | ![fit example](https://factorymethod.uk/image.png?mode=fit&width=180&height=200&bg=abc&origin=http://factorymethod.uk/test_pattern.png)              |
-| [https://.../image.jpg?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>bg=abc&<br/>origin=https://.../Apollo_17.jpeg](https://factorymethod.uk/image.png?mode=fit&width=180&height=200&bg=abc&origin=http://factorymethod.uk/Apollo_17.jpeg)                                                                           | ![fit example](https://factorymethod.uk/image.jpeg?mode=fit&width=180&height=200&bg=abc&origin=http://factorymethod.uk/Apollo_17.jpeg)               |
-| Scaled up and cropped to bottom-left<br/>[https://.../image.jpg?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>scale=1.5&<br/>dx=-1&dy=1&<br/>origin=https://.../Apollo_17.jpeg](https://factorymethod.uk/image.png?mode=fit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=http://factorymethod.uk/Apollo_17.jpeg) | ![fit example](https://factorymethod.uk/image.jpeg?mode=fit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=http://factorymethod.uk/Apollo_17.jpeg) |
+| [https://.../?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>bg=abc&<br/>origin=https://.../test_pattern.png](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&bg=abc&origin=https://public.adamdu.nz/test_pattern.png)                                                                       | ![fit example](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&bg=abc&origin=https://public.adamdu.nz/test_pattern.png)              |
+| [https://.../?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>bg=abc&<br/>origin=https://.../Apollo_17.jpeg](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&bg=abc&origin=https://public.adamdu.nz/Apollo_17.jpeg)                                                                           | ![fit example](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&bg=abc&origin=https://public.adamdu.nz/Apollo_17.jpeg)               |
+| Scaled up and cropped to bottom-left<br/>[https://.../?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>scale=1.5&<br/>dx=-1&dy=1&<br/>origin=https://.../Apollo_17.jpeg](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=https://public.adamdu.nz/Apollo_17.jpeg) | ![fit example](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=https://public.adamdu.nz/Apollo_17.jpeg) |
 
 ### Limit mode
 
@@ -94,13 +94,14 @@ Examples:
 
 | URL                                                                                                                                                                                                                                                                                                                          | Image                                                                                                                                                    |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [https://.../image.png?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>origin=https://.../test_pattern.png](https://factorymethod.uk/image.png?mode=limit&width=180&height=200&&origin=http://factorymethod.uk/test_pattern.png)                                                                                         | ![limit example](https://factorymethod.uk/image.png?mode=limit&width=180&height=200&origin=http://factorymethod.uk/test_pattern.png)                     |
-| [https://.../image.jpg?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>origin=https://.../Apollo_17.jpeg](https://factorymethod.uk/image.png?mode=limit&width=180&height=200&&origin=http://factorymethod.uk/Apollo_17.jpeg)                                                                                             | ![limit example](https://factorymethod.uk/image.jpeg?mode=limit&width=180&height=200&origin=http://factorymethod.uk/Apollo_17.jpeg)                      |
-| Scaled up and cropped to bottom-left<br/>[https://.../image.jpg?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>scale=1.5&<br/>dx=-1&dy=1&<br/>origin=https://.../Apollo_17.jpeg](https://factorymethod.uk/image.png?mode=limit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=http://factorymethod.uk/Apollo_17.jpeg) | ![limit example](https://factorymethod.uk/image.jpeg?mode=limit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=http://factorymethod.uk/Apollo_17.jpeg) |
+| [https://.../?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>origin=https://.../test_pattern.png](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&&origin=https://public.adamdu.nz/test_pattern.png)                                                                                         | ![limit example](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&origin=https://public.adamdu.nz/test_pattern.png)                     |
+| [https://.../?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>origin=https://.../Apollo_17.jpeg](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&&origin=https://public.adamdu.nz/Apollo_17.jpeg)                                                                                             | ![limit example](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&origin=https://public.adamdu.nz/Apollo_17.jpeg)                      |
+| Scaled up and cropped to bottom-left<br/>[https://.../?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>scale=1.5&<br/>dx=-1&dy=1&<br/>origin=https://.../Apollo_17.jpeg](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=https://public.adamdu.nz/Apollo_17.jpeg) | ![limit example](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=https://public.adamdu.nz/Apollo_17.jpeg) |
 
 ## Limitations
 
 - Cloudflare workers are [limited](https://developers.cloudflare.com/workers/writing-workers/resource-limits/) in the amount of CPU time they are allowed to take per request (between 5ms for free and 50ms for business/enterprise accounts). This means that large images (> 1000 pixels in width or height), sometimes run out of processing time.
+- Input WebP formatted images might end-up producing colour-distorded output. e.g. Processing the example WebP image from WikiPedia: ![WebP](https://cgi.adamdu.nz/?mode=fill&width=100&height=150&origin=https://upload.wikimedia.org/wikipedia/commons/a/a1/Johnrogershousemay2020.webp)
 
 ## Development
 
@@ -110,11 +111,13 @@ To run pure Rust tests:
 $ cargo test
 ```
 
+<strike>
 And for a headless browser smoke test using Chrome:
 
 ```
 $ wasm-pack test --headless --chrome
 ```
+</strike>
 
 ## License
 

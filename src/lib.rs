@@ -4,7 +4,6 @@ extern crate wasm_bindgen;
 mod image;
 mod utils;
 
-use base64::encode;
 use cfg_if::cfg_if;
 use serde_wasm_bindgen::from_value;
 use wasm_bindgen::prelude::*;
@@ -45,12 +44,6 @@ struct ProcessImageParams {
 
 fn error_to_js_value(e: failure::Error) -> JsValue {
     JsValue::from_str(&e.to_string())
-}
-
-#[wasm_bindgen]
-pub fn convert_to_base64(msg: &str) -> Result<String, JsValue> {
-    let hash = encode(msg);
-    Ok(hash)
 }
 
 #[wasm_bindgen]

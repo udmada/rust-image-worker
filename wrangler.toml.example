@@ -1,19 +1,8 @@
 name = "rust-image-worker"
-compatibility_date = "2022-11-30"
+compatibility_date = "2022-10-31"
 main = "worker/worker.js"
 account_id = "<YOUR_ACCOUNT_ID>"
 workers_dev = true
-
-[[r2_buckets]]
-binding = "IMG_BUCKET" # <~ valid JavaScript variable name
-bucket_name = "<YOUR_R2_BUCKET_NAME>"
-preview_bucket_name = "<YOUR_R2_BUCKET_NAME_FOR_DEV>"
-
-rules = [
-  { type = "ESModule", globs = ["worker/wasm/*.js"], fallthrough = false },
-  { type = "CompiledWasm", globs = ["worker/wasm/*.wasm"], fallthrough = false },
-  { type = "Data", globs = ["worker/wasm/*.d.ts"], fallthrough = true },
-]
 
 [build]
 command = "wasm-pack build --out-dir worker/wasm --target web --out-name index && rm worker/wasm/.gitignore && rm worker/wasm/README.md"

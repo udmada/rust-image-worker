@@ -373,7 +373,7 @@ function getColor(hexStr) {
     const output = [];
     for (let i = 0; i < 3; i++) {
       const hex = parseInt(hexStr.slice(0, 2), 16);
-      if (hex === NaN) {
+      if (isNaN(hex)) {
         return;
       }
       output.push(hex);
