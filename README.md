@@ -54,6 +54,7 @@ The query parameters should include a combination of:
 - **dx**, **dy**: the relative position when the image is cropped, numbers between _-1.0_ (left/top) and _1.0_ (right/bottom) (default: _0.0_, center)
 - **scale**: a positive rational number to scale the source image by (default: _1.0_)
 - **bg**: a color in [hex triplet](https://en.wikipedia.org/wiki/Web_colors#Hex_triplet) format (default: transparent)
+- **filter**: currently only _grayscale_ is supported (default: _none_)
 
 ## Modes
 
@@ -65,10 +66,10 @@ The source image is cropped in order to ensure that the full _width_ and _height
 
 Examples:
 
-| URL                                                                                                                                                                                                                               | Image                                                                                                                              |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| URL                                                                                                                                                                                                           | Image                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | [https://.../?<br/>mode=fill&<br/>width=180&<br/>height=200&<br/>origin=https://.../test_pattern.png](https://cgi.adamdu.nz/?mode=fill&width=180&height=200&origin=https://public.adamdu.nz/test_pattern.png) | ![fill example](https://cgi.adamdu.nz/?mode=fill&width=180&height=200&origin=https://public.adamdu.nz/test_pattern.png) |
-| [https://.../?<br/>mode=fill&<br/>width=180&<br/>height=200&<br/>origin=https://.../Apollo_17.jpeg](https://cgi.adamdu.nz/?mode=fill&width=180&height=200&origin=https://public.adamdu.nz/Apollo_17.jpeg)     | ![fill example](https://cgi.adamdu.nz/?mode=fill&width=180&height=200&origin=https://public.adamdu.nz/Apollo_17.jpeg)  |
+| [https://.../?<br/>mode=fill&<br/>width=180&<br/>height=200&<br/>origin=https://.../Apollo_17.jpeg](https://cgi.adamdu.nz/?mode=fill&width=180&height=200&origin=https://public.adamdu.nz/Apollo_17.jpeg)     | ![fill example](https://cgi.adamdu.nz/?mode=fill&width=180&height=200&origin=https://public.adamdu.nz/Apollo_17.jpeg)   |
 
 ### Fit mode
 
@@ -78,9 +79,9 @@ The output image is exactly sized according to the given width and height, with 
 
 Examples:
 
-| URL                                                                                                                                                                                                                                                                                                                      | Image                                                                                                                                                |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [https://.../?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>bg=abc&<br/>origin=https://.../test_pattern.png](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&bg=abc&origin=https://public.adamdu.nz/test_pattern.png)                                                                       | ![fit example](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&bg=abc&origin=https://public.adamdu.nz/test_pattern.png)              |
+| URL                                                                                                                                                                                                                                                                                                  | Image                                                                                                                                    |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| [https://.../?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>bg=abc&<br/>origin=https://.../test_pattern.png](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&bg=abc&origin=https://public.adamdu.nz/test_pattern.png)                                                                       | ![fit example](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&bg=abc&origin=https://public.adamdu.nz/test_pattern.png)             |
 | [https://.../?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>bg=abc&<br/>origin=https://.../Apollo_17.jpeg](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&bg=abc&origin=https://public.adamdu.nz/Apollo_17.jpeg)                                                                           | ![fit example](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&bg=abc&origin=https://public.adamdu.nz/Apollo_17.jpeg)               |
 | Scaled up and cropped to bottom-left<br/>[https://.../?<br/>mode=fit&<br/>width=180&<br/>height=200&<br/>scale=1.5&<br/>dx=-1&dy=1&<br/>origin=https://.../Apollo_17.jpeg](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=https://public.adamdu.nz/Apollo_17.jpeg) | ![fit example](https://cgi.adamdu.nz/?mode=fit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=https://public.adamdu.nz/Apollo_17.jpeg) |
 
@@ -92,9 +93,9 @@ The source image is scaled to fit within the given _width_ and _height_.
 
 Examples:
 
-| URL                                                                                                                                                                                                                                                                                                                          | Image                                                                                                                                                    |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [https://.../?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>origin=https://.../test_pattern.png](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&&origin=https://public.adamdu.nz/test_pattern.png)                                                                                         | ![limit example](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&origin=https://public.adamdu.nz/test_pattern.png)                     |
+| URL                                                                                                                                                                                                                                                                                                      | Image                                                                                                                                        |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| [https://.../?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>origin=https://.../test_pattern.png](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&&origin=https://public.adamdu.nz/test_pattern.png)                                                                                         | ![limit example](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&origin=https://public.adamdu.nz/test_pattern.png)                    |
 | [https://.../?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>origin=https://.../Apollo_17.jpeg](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&&origin=https://public.adamdu.nz/Apollo_17.jpeg)                                                                                             | ![limit example](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&origin=https://public.adamdu.nz/Apollo_17.jpeg)                      |
 | Scaled up and cropped to bottom-left<br/>[https://.../?<br/>mode=limit&<br/>width=180&<br/>height=200&<br/>scale=1.5&<br/>dx=-1&dy=1&<br/>origin=https://.../Apollo_17.jpeg](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=https://public.adamdu.nz/Apollo_17.jpeg) | ![limit example](https://cgi.adamdu.nz/?mode=limit&width=180&height=200&dx=-1&dy=1&scale=1.5&origin=https://public.adamdu.nz/Apollo_17.jpeg) |
 
@@ -117,6 +118,7 @@ And for a headless browser smoke test using Chrome:
 ```
 $ wasm-pack test --headless --chrome
 ```
+
 </strike>
 
 ## License
