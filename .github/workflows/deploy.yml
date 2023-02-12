@@ -17,7 +17,7 @@ jobs:
       - name: Import Custom Domain
         shell: bash
         run: |
-          echo "${{ secrets.CF_CUSTOM_DOMAIN }}" >> $./wrangler.toml
+          echo "${{ secrets.CF_CUSTOM_DOMAIN }}" >> ${{ github.workspace }}/wrangler.toml
       - name: Install wasm-pack & Publish
         run: cargo install wasm-pack && npm install -g wrangler && npx wrangler publish
         env:
