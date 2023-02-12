@@ -14,6 +14,10 @@ jobs:
     name: Deploy
     steps:
       - uses: actions/checkout@v3
+      - name: Import Custom Domain
+        shell: bash
+        run: |
+          echo "${{ secrets.CF_CUSTOM_DOMAIN }}" >> $./wrangler.toml
       - name: Install wasm-pack & Publish
         run: cargo install wasm-pack && npm install -g wrangler && npx wrangler publish
         env:
