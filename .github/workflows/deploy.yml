@@ -14,6 +14,10 @@ jobs:
     name: Deploy
     steps:
       - uses: actions/checkout@v3
+      - name: install wasm-pack
+        uses: jetli/wasm-pack-action@v0.4.0
+        with:
+          version: 'latest'
       - name: Publish
         uses: cloudflare/wrangler-action@2.0.0
         with:
