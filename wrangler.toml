@@ -1,0 +1,7 @@
+name = "rust-image-worker"
+compatibility_date = "2022-10-31"
+main = "worker/worker.js"
+workers_dev = true
+
+[build]
+command = "wasm-pack build --out-dir worker/wasm --target web --out-name index && rm worker/wasm/.gitignore && rm worker/wasm/README.md"

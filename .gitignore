@@ -11,4 +11,3 @@ tests/output/
 node_modules
 
 .env
-wrangler.toml
