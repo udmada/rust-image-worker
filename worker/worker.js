@@ -59,10 +59,14 @@ async function handleRequest(event) {
     const data = await originRes.arrayBuffer();
     const output = process_image(new Uint8Array(data), params);
     const output_format = output.slice(-1);
-
+    const filename = String(params.origin).split("/").at(-1).split(".").at(0).replace(/[^0-9a-zA-Z. _\-]/g, '');
+    
     res = new Response(output.slice(0, -1), { status: 200 });
     res.headers.set("Content-type", getMimeType(VALID_FORMATS[output_format]));
     res.headers.append("Cache-Control", "public, max-age=0, s-maxage=86400");
+    if (filename) {
+      res.headers.set('Content-Disposition', 'attachment; filename=' + filename);
+    }
     cache.put(req, res.clone());
     if (originResToCache) {
       cache.put(originReq, originResToCache);
