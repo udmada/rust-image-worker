@@ -65,7 +65,7 @@ async function handleRequest(event) {
     res.headers.set("Content-type", getMimeType(VALID_FORMATS[output_format]));
     res.headers.append("Cache-Control", "public, max-age=0, s-maxage=86400");
     if (filename) {
-      res.headers.set('Content-Disposition', 'attachment; filename=' + filename);
+      res.headers.set('Content-Disposition', 'inline; filename=' + filename);
     }
     cache.put(req, res.clone());
     if (originResToCache) {
